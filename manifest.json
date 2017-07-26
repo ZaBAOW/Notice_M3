@@ -4,20 +4,23 @@
   "name": "Counter",
   "short_name": "Counter",
   "description": "Count Messages as they appear",
-  "version": "0.01",
+  "version": "1.0",
   "background": {
-    "scripts": ["checkIfTwitch.js"],
+    "scripts": ["app.js"],
     "persistent": false
   },
-  "page_action": {
-    "default_title": "twitch_message_count"
+
+  "browser_action":{
+    "default_icon": "notice-icon.png",
+    "default_popup": "index.html"
   },
+
   "content_scripts": [
     {
       "matches": ["https://www.twitch.tv/*"],
       "js": [
-        "jquery-3.1.1.slim.min.js",
-        "main.js"
+        "jquery-3.2.1.min.js",
+        "app.js"
       ],
       "exclude_globs": ["https://www.twitch.tv/directory/*",
         "https://www.twitch.tv/p/*",
@@ -35,6 +38,7 @@
     "assets/bard.png"
   ],
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "https://ajax.googleapis.com/"
   ]
 }
