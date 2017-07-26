@@ -1,4 +1,4 @@
-# Notice_M3
+# Notice_M3 Readme
 A chrome browser extension that connects to Twitches chat channels and notifies users of increased rate in chat messages that are sent to the channel.
 
 Notice_M3's use:
