@@ -1,18 +1,20 @@
-//authorization code for twitch API
 // global variables that will be able to be changed by user in the future.
 // threshold variable will be changed via automatic message counter algorithem
 //		that will calculated messages/minute
 var TRHESHOLD = 25;
 var COUNT = 0;
 
-//mutationObserver used to find twitch chat
+//MessageObserverObserver used to find twitch chat
 var config = {attributes: false, childList: true, characterData: false};
 
 var htmlBody = $("body")[0];
-var chatLoadedObserver = new MutationObserver(function (mutations, observer) {
-    mutations.forEach(function (mutation) {
+var chatLoadedObserver = new MutationObserver(function (message, observer) {
+	console.log("Chat found!");
+    messages.forEach(function (message) {
+
         var chatSelector = $(".chat-lines");
         if (chatSelector.length > 0) {
+        	
             // Select the node element.
             var target = chatSelector[0];
 
@@ -27,15 +29,14 @@ var chatLoadedObserver = new MutationObserver(function (mutations, observer) {
 
 //mutationObserver used to find newly created messages
 // Attach listener that acts when a new chat message appears.
-var messageFinder = new MutationObserver(function (mutations) {
+var messageFinder = new MutationObserver(function (message) {
   // For each mutation object, we look for the addedNode object
-  mutations.forEach(function (mutation) {
+  messages.forEach(function (message) {
     // A chat message would be an added node
     mutation.addedNodes.forEach(function (addedNode) {
       // At this point it's potentially a chatMessage object.
       var chatMessage = $(addedNode);
-        COUNT += 1;
-  		console.log("found message")
+
       if (!chatMessage.is(".chat-line", ".message-line")) {
         // this isn't a chat message, skip processing.
         return;
@@ -48,10 +49,11 @@ var messageFinder = new MutationObserver(function (mutations) {
   });
 });
 
-// function clearArray(MESSAGE_ARRAY){
-// 	MESSAGE_ARRAY = [];
-// 	return MESSAGE_ARRAY;
-// }
+var parseMsgHTML = function(msgHTML){
+    COUNT += 1;
+	console.log(msgHTML);
+}
+
 
 function sendNotice(){
 	if(COUNT = TRHESHOLD){
@@ -61,14 +63,16 @@ function sendNotice(){
 }
 
 //on load ask user for permission for Notification APi to access their information.
-debounce( function notifyMe(){
+var notifyMe =  function(){
+	console.log("using notifyMe")
 	if(!("Notification" in window)){
 		alert("This browser does not support desktop notification")
 	}
 
 	else if(Notification.permission === "granted"){
+		console.log("permission already granted");
 		//finds twitch chat
-		chatLoadedObserver;
+		chatLoadedObserver.observe(htmlBody, config);
 
 		//finds newly created message content
 		messageFinder;
@@ -84,8 +88,9 @@ debounce( function notifyMe(){
 	else if(Notification.permission !== "denied"){
 		Notification.requestPermission(function(permission){
 			if(permission === "granted"){
+				console.log("permission granted");
 				// if permission granted, begin to parse html of currently running twitch streams on user's device for list elements.
-				chatLoadedObserver;
+				chatLoadedObserver.observe(htmlBody, config);
 				//html parsing code that should look for message elements
 				messageFinder;
 
@@ -99,7 +104,7 @@ debounce( function notifyMe(){
 				}
 			})
 		};
-}, 10000);
+}
 
 function debounce(func, wait, immediate) {
 	var timeout;
@@ -116,6 +121,14 @@ function debounce(func, wait, immediate) {
 	};
 };
 
+document.addEventListener('DOMContentLoaded', function(){
+	var myBtn = document.getElementById('btn');
+	// onClick logic
+	myBtn.addEventListener('click', function(){
+		console.log('event!')
+		notifyMe();
+	})
+})
 
 //li_count function will push listed items parsed by observer into an array.
 //the the value of array.length will then be compared to THRESHOLD value.
