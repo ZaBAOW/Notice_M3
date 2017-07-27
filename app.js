@@ -1,7 +1,8 @@
 // global variables that will be able to be changed by user in the future.
 // threshold variable will be changed via automatic message counter algorithem
 //		that will calculated messages/minute
-var TRHESHOLD = 25;
+
+var THRESHOLD = 25;
 var COUNT = 0;
 
 //MessageObserverObserver used to find twitch chat
