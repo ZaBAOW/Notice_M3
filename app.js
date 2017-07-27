@@ -1,8 +1,9 @@
 //authorization code for twitch API
-
+// global variables that will be able to be changed by user in the future.
+// threshold variable will be changed via automatic message counter algorithem
+//		that will calculated messages/minute
 var TRHESHOLD = 25;
 var COUNT = 0;
-var MESSAGE_ARRAY= [];
 
 //mutationObserver used to find twitch chat
 var config = {attributes: false, childList: true, characterData: false};
@@ -16,7 +17,7 @@ var chatLoadedObserver = new MutationObserver(function (mutations, observer) {
             var target = chatSelector[0];
 
             // Pass in the target node, as well as the observer options
-            bardFinder.observe(target, config);
+            messageFinder.observe(target, config);
 
             // Unregister chatLoadedObserver. We don't need to check for the chat element anymore.
             observer.disconnect();
@@ -33,7 +34,8 @@ var messageFinder = new MutationObserver(function (mutations) {
     mutation.addedNodes.forEach(function (addedNode) {
       // At this point it's potentially a chatMessage object.
       var chatMessage = $(addedNode);
-      COUNT += 1;
+        COUNT += 1;
+  		console.log("found message")
       if (!chatMessage.is(".chat-line", ".message-line")) {
         // this isn't a chat message, skip processing.
         return;
@@ -46,17 +48,20 @@ var messageFinder = new MutationObserver(function (mutations) {
   });
 });
 
-function clearArray(MESSAGE_ARRAY){
-	MESSAGE_ARRAY = [];
-	return MESSAGE_ARRAY;
-}
+// function clearArray(MESSAGE_ARRAY){
+// 	MESSAGE_ARRAY = [];
+// 	return MESSAGE_ARRAY;
+// }
 
 function sendNotice(){
-	var notification = new Notification('Something big just went down on the stream while you weren\'t looking!')
+	if(COUNT = TRHESHOLD){
+		var notification = new Notification('Something big just went down on the stream while you weren\'t looking!')
+		COUNT = 0;
+	}
 }
 
 //on load ask user for permission for Notification APi to access their information.
-function notifyMe(){
+debounce( function notifyMe(){
 	if(!("Notification" in window)){
 		alert("This browser does not support desktop notification")
 	}
@@ -72,7 +77,7 @@ function notifyMe(){
 		sendNotice();
 
 		//clears array for next notification
-		clearArray();
+		// clearArray();
 
 	}
 
@@ -91,12 +96,26 @@ function notifyMe(){
 
 				//variable that refers to threshold that must be passed for notification to appear (will be set by the streamer)
 				sendNotice();
-				clearArray();
+				//clearArray();
 				}
-
 			})
 		};
-}
+}, 10000);
+
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
 
 
 //li_count function will push listed items parsed by observer into an array.
