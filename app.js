@@ -91,8 +91,7 @@ debounce( function notifyMe(){
 
 				//should be the first element with this tag name that is created for the user's session.
 				//not sure whether to get element by tag or class name(message)
-
-				//create list item array.				
+ 			
 
 				//variable that refers to threshold that must be passed for notification to appear (will be set by the streamer)
 				sendNotice();
