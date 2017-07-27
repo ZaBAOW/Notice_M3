@@ -122,10 +122,7 @@ function debounce(func, wait, immediate) {
 	};
 };
 
-chrome.browserAction.onCliked.addListener('DOMContentLoaded', function(){
-	console.log('event!')
-	notifyMe();
-}
+notifyMe();
 
 //li_count function will push listed items parsed by observer into an array.
 //the the value of array.length will then be compared to THRESHOLD value.
