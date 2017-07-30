@@ -8,9 +8,9 @@ var RESULT = COUNT;
 var config = { attributes: false, childList: true, characterData: true };
 var htmlBody = $("body")[0];
 
-var showResult = setInterval(function(){
-	var results = new Notification(COUNT + " messages after a minute.");
-	COUNT = 0;
+var showResult = setInterval(function() {
+    var results = new Notification(COUNT + " messages after a minute.");
+    COUNT = 0;
 }, 60 * 1000);
 
 var countMsgHTML = function(msgHTML) {
@@ -20,19 +20,19 @@ var countMsgHTML = function(msgHTML) {
 };
 
 function chatObserver() {
-	console.log("using chatObserver");
-	return new MutationObserver(function(mutations){
-	    mutations.forEach(function(mutation) {
-	        mutation.addedNodes.forEach(function(addedNode) {
-	            var chatMessage = $(addedNode);
-	            if (!chatMessage.is(".chat-line", ".message-line")) {
-	                return;
-	            }
-	            var messageElement = chatMessage.children('.message');
-	            countMsgHTML(messageElement);
-	        });
-	    });
-	});
+    console.log("using chatObserver");
+    return new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(addedNode) {
+                var chatMessage = $(addedNode);
+                if (!chatMessage.is(".chat-line", ".message-line")) {
+                    return;
+                }
+                var messageElement = chatMessage.children('.message');
+                countMsgHTML(messageElement);
+            });
+        });
+    });
 };
 
 var chatSearcher = chatObserver();
@@ -77,9 +77,8 @@ function notifyMe() {
                 console.log("permission was granted");
             }
         });
-    }
-    else{
-    	console.log("statements aren't working");
+    } else {
+        console.log("statements aren't working");
     }
 }
 
