@@ -3,17 +3,19 @@ var MutationObserver = window.MutationObserver || window.WebKitMutationObserver 
 // var target = $(".message")[0];
 
 var COUNT = 0;
+var RESULT = COUNT;
 
 var config = { attributes: false, childList: true, characterData: true };
 var htmlBody = $("body")[0];
 
+var showResult = setInterval(function(){
+	var results = new Notification(COUNT + " messages after a minute.");
+	COUNT = 0;
+}, 60 * 1000);
 
 var countMsgHTML = function(msgHTML) {
     COUNT += 1;
     console.log("found a message");
-    if(COUNT == 100){
-    	COUNT = 0;
-    }
     console.log(COUNT);
 };
 
@@ -36,7 +38,7 @@ function chatObserver() {
 var chatSearcher = chatObserver();
 
 
-var chatLoadedObserver = new MutationObserver(function(mutation) {
+var chatLoadedObserver = new MutationObserver(function(mutation, observer) {
     console.log("new mutationobserver loaded");
     mutation.forEach(function(mutation) {
         var chatSelector = $(".chat-lines");
