@@ -2,16 +2,36 @@ var MutationObserver = window.MutationObserver || window.WebKitMutationObserver 
 
 // var target = $(".message")[0];
 
+var THRESHOLD = 0;
 var COUNT = 0;
 var RESULT = COUNT;
+var EXECUTED = false;
 
-var config = { attributes: false, childList: true, characterData: true };
+var config = { attributes: true, childList: true, characterData: true };
 var htmlBody = $("body")[0];
 
-var showResult = setInterval(function() {
-    var results = new Notification(COUNT + " messages after a minute.");
-    COUNT = 0;
-}, 60 * 1000);
+
+var setThreshold = setInterval(function(){
+	if(!EXECUTED){
+		EXECUTED = true;
+		THRESHOLD = COUNT * 0.95;
+		var thresh = new Notification("threshold was set.");
+	}
+	return;
+}, 59 * 1000);
+
+// var showResult = setInterval(function() {
+
+//     COUNT = 0;
+// }, 60 * 1000);
+
+var noticeMe = setInterval(function(){
+	// var results = new Notification(COUNT + " messages after a minute.");
+	if(COUNT >= THRESHOLD){
+		var notice = new Notification("NOTICE ME!!!");
+	}
+	COUNT = 0;
+}, 60 * 500);
 
 var countMsgHTML = function(msgHTML) {
     COUNT += 1;
@@ -39,21 +59,21 @@ var chatSearcher = chatObserver();
 
 
 var chatLoadedObserver = new MutationObserver(function(mutation, observer) {
-    console.log("new mutationobserver loaded");
     mutation.forEach(function(mutation) {
         var chatSelector = $(".chat-lines");
-        console.log("chat selected");
-        if (chatSelector.length > 0) {
+        var liveSelector = $(".player-streamstatus__label");
+        if (liveSelector === "Offline"){
+        	var offline = new Notification("The stream is not currently live Notice_M3 will not run.");
+        	return;
+        }
+        else if(chatSelector.length > 0) {
             var target = chatSelector[0];
-            console.log("found twitch chat");
 
             chatSearcher.observe(target, config);
             observer.disconnect();
         }
     });
 });
-
-
 
 // chatObserver.disconnect();
 
