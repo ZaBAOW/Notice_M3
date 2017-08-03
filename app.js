@@ -2,6 +2,7 @@ var MutationObserver = window.MutationObserver || window.WebKitMutationObserver 
 
 // var target = $(".message")[0];
 
+var ENABLED = true;
 var THRESHOLD = 0;
 var COUNT = 0;
 var RESULT = COUNT;
@@ -20,6 +21,11 @@ var setThreshold = setInterval(function(){
 	return;
 }, 59 * 1000);
 
+function resetThreshold(){
+	EXECUTED = false;
+	var reset = new Notificiation("Threshold will reset", "notice-icon.png");
+}
+
 // var showResult = setInterval(function() {
 
 //     COUNT = 0;
@@ -31,7 +37,7 @@ var noticeMe = setInterval(function(){
 		var notice = new Notification("NOTICE ME!!!");
 	}
 	COUNT = 0;
-}, 60 * 500);
+}, 60 * 1000);
 
 var countMsgHTML = function(msgHTML) {
     COUNT += 1;
