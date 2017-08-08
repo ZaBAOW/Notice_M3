@@ -108,4 +108,24 @@ function notifyMe() {
     }
 }
 
-notifyMe();
+function checkNotifyMe(){
+    if(ENABLED == true){
+        notifyMe();
+    }
+}
+
+function enableNotifyMe(){
+    ENABLED = true;
+    $("#enable-btn").att('disabled', true);
+    $("#disable-btn").att('disabled', false);
+    console.log("enabling Notify_M3");
+    var turnOn = new Notification("Notify_M3 has been enabled");
+    checkNotifyMe();
+}
+
+function disableNotifyMe(){
+    ENABLED = false;
+
+    console.log("disabling Notify_M3");
+    var turnOff = new Notification("Notify_M3 has been disabled");
+}
