@@ -125,7 +125,8 @@ function enableNotifyMe(){
 
 function disableNotifyMe(){
     ENABLED = false;
-
+    $("#enable-btn").att('disabled', false);
+    $("#disable-btn").att('disabled', true);
     console.log("disabling Notify_M3");
     var turnOff = new Notification("Notify_M3 has been disabled");
 }
