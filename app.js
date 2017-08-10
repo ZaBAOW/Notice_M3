@@ -7,11 +7,11 @@ var MutationObserver = window.MutationObserver || window.WebKitMutationObserver 
 
 // var target = $(".message")[0];
 
-var ENABLED = true;
+window.ENABLED = true;
 var THRESHOLD = 0;
 var COUNT = 0;
 var RESULT = COUNT;
-var EXECUTED = false;
+window.EXECUTED = false;
 
 var config = { attributes: true, childList: true, characterData: true };
 var htmlBody = $("body")[0];
@@ -23,13 +23,7 @@ var setThreshold = setInterval(function(){
 		THRESHOLD = COUNT * 0.95;
 		var thresh = new Notification("threshold was set.");
 	}
-	return;
 }, 59 * 1000);
-
-function resetThreshold(){
-	EXECUTED = false;
-	var reset = new Notificiation("Threshold will reset", "notice-icon.png");
-}
 
 // var showResult = setInterval(function() {
 
@@ -44,6 +38,9 @@ var noticeMe = setInterval(function(){
 	COUNT = 0;
 }, 60 * 1000);
 
+var checkEnable = setInterval(function(){
+    console.log(EXECUTED);
+}, 5000);
 
 var countMsgHTML = function(msgHTML) {
     COUNT += 1;
@@ -120,6 +117,4 @@ function checkNotifyMe(){
 }
 
 checkNotifyMe();
-
-// Popup buttons
 
