@@ -44,6 +44,7 @@ var noticeMe = setInterval(function(){
 	COUNT = 0;
 }, 60 * 1000);
 
+
 var countMsgHTML = function(msgHTML) {
     COUNT += 1;
     console.log("found a message");
@@ -73,11 +74,11 @@ var chatLoadedObserver = new MutationObserver(function(mutation, observer) {
     mutation.forEach(function(mutation) {
         var chatSelector = $(".chat-lines");
         var liveSelector = $(".player-streamstatus__label");
-        if (liveSelector === "Offline"){
-        	var offline = new Notification("The stream is not currently live Notice_M3 will not run.");
-        	return;
-        }
-        else if(chatSelector.length > 0) {
+        // if (liveSelector === "Offline"){
+        // 	var offline = new Notification("The stream is not currently live Notice_M3 will not run.");
+        // 	return;
+        // }
+        if (chatSelector.length > 0) {
             var target = chatSelector[0];
 
             chatSearcher.observe(target, config);
@@ -119,20 +120,7 @@ function checkNotifyMe(){
     }
 }
 
-function enableNotifyMe(){
-    ENABLED = true;
-    $("#enable-btn").att('disabled', true);
-    $("#disable-btn").att('disabled', false);
-    console.log("enabling Notify_M3");
-    var turnOn = new Notification("Notify_M3 has been enabled");
-    checkNotifyMe();
-}
 
 
-function disableNotifyMe(){
-    ENABLED = false;
-    $("#enable-btn").att('disabled', false);
-    $("#disable-btn").att('disabled', true);
-    console.log("disabling Notify_M3");
-    var turnOff = new Notification("Notify_M3 has been disabled");
-}
+// Popup buttons
+

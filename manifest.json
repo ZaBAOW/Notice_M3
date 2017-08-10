@@ -22,7 +22,8 @@
       "css": ["main.css"],
       "js": [
         "jquery-3.2.1.min.js",
-        "app.js"
+        "app.js",
+        "content-scripts.js"
       ],
       "exclude_globs": ["https://www.twitch.tv/directory/*",
         "https://www.twitch.tv/p/*",
@@ -37,7 +38,7 @@
     }
   ],
 
-"content_security_policy":"script-src 'self' https://apis.google.com; object-src 'self'",
+"content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
 
   "permissions": [
     "activeTab",
