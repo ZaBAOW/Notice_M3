@@ -73,7 +73,7 @@ var chatSearcher = chatObserver();
 var chatLoadedObserver = new MutationObserver(function(mutation, observer) {
     mutation.forEach(function(mutation) {
         var chatSelector = $(".chat-lines");
-        var liveSelector = $(".player-streamstatus__label");
+        // var liveSelector = $(".player-streamstatus__label");
         // if (liveSelector === "Offline"){
         // 	var offline = new Notification("The stream is not currently live Notice_M3 will not run.");
         // 	return;
@@ -87,7 +87,6 @@ var chatLoadedObserver = new MutationObserver(function(mutation, observer) {
     });
 });
 
-// chatObserver.disconnect();
 
 //on load ask user for permission for Notification APi to access their information.
 function notifyMe() {
@@ -120,7 +119,7 @@ function checkNotifyMe(){
     }
 }
 
-
+checkNotifyMe();
 
 // Popup buttons
 
