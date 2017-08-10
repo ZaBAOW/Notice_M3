@@ -23,7 +23,7 @@
       "js": [
         "jquery-3.2.1.min.js",
         "app.js",
-        "content-scripts.js"
+        "popup.js"
       ],
       "exclude_globs": ["https://www.twitch.tv/directory/*",
         "https://www.twitch.tv/p/*",
