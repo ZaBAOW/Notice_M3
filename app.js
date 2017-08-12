@@ -48,8 +48,9 @@ chrome.runtime.onMessage.addListener(
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
-        if (request.executed == false)
+        if (request.executed === false)
             sendResponse({recieved: "message recieved"});
+        return true;
     });
 
 var countMsgHTML = function(msgHTML) {

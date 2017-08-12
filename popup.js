@@ -25,7 +25,7 @@ reset.onclick = function (){
     var reset = new Notification("Threshold will reset");
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       var tab = tabs[0];
-      chrome.tabs.sendMessage(tab[0].id, {executed: false}, function(response) {
+      chrome.tabs.sendMessage(tab.id, {executed: false}, function(response) {
         console.log(response.recieved);
       });
     });
