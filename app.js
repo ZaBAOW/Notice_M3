@@ -8,9 +8,9 @@ var MutationObserver = window.MutationObserver || window.WebKitMutationObserver 
 // var target = $(".message")[0];
 
 window.ENABLED = true;
-var THRESHOLD = 0;
-var COUNT = 0;
-var RESULT = COUNT;
+var threshold = 0;
+var count = 0;
+var RESULT = count;
 window.EXECUTED = false;
 
 var config = { attributes: true, childList: true, characterData: true };
@@ -20,10 +20,11 @@ var htmlBody = $("body")[0];
 var setThreshold = setInterval(function(){
 	if(!EXECUTED){
 		EXECUTED = true;
-		THRESHOLD = COUNT * 0.95;
+		threshold = count * 0.95;
 		var thresh = new Notification("threshold was set.");
 	}
 }, 59 * 1000);
+
 
 // var showResult = setInterval(function() {
 
@@ -32,20 +33,29 @@ var setThreshold = setInterval(function(){
 
 var noticeMe = setInterval(function(){
 	// var results = new Notification(COUNT + " messages after a minute.");
-	if(COUNT >= THRESHOLD){
+	if(count >= threshold){
 		var notice = new Notification("NOTICE ME!!!");
 	}
-	COUNT = 0;
+	count = 0;
 }, 60 * 1000);
 
 var checkEnable = setInterval(function(){
     console.log(EXECUTED);
 }, 5000);
 
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse){
+        console.log(sender.tab ?
+            "from a content script:" + sender.tab.url :
+            "from the extension");
+        if (request.executed == false)
+            sendResponse({recieved: "message recieved"});
+    });
+
 var countMsgHTML = function(msgHTML) {
-    COUNT += 1;
+    count += 1;
     console.log("found a message");
-    console.log(COUNT);
+    console.log(count);
 };
 
 function chatObserver() {
@@ -111,8 +121,12 @@ function notifyMe() {
 }
 
 function checkNotifyMe(){
-    if(ENABLED == true){
+    if(ENABLED){
+        console.log("Notice_M3 is running");
         notifyMe();
+    }
+    else{
+        console.log("Notice_M3 is not running");
     }
 }
 

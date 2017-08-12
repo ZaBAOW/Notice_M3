@@ -5,7 +5,7 @@ var reset = document.getElementById('reset-btn');
 enable.onclick = function(){
     document.getElementById('enable-btn').disabled = true;
     document.getElementById('disable-btn').disabled = false;
-    ENABLED = true;
+    enabled = true;
     console.log("enabling Notify_M3");
     var turnOn = new Notification("Notify_M3 has been enabled");
     checkNotifyMe();
@@ -14,14 +14,20 @@ enable.onclick = function(){
 disable.onclick = function(){
     document.getElementById('enable-btn').disabled = false;
     document.getElementById('disable-btn').disabled = true;
-    ENABLED = false;
+    enabled = false;
     console.log("disabling Notify_M3");
     var turnOff = new Notification("Notify_M3 has been disabled");
 };
 
 reset.onclick = function (){
-    EXECUTED = false;
+    // executed = false;
     console.log("resetting threshold...");
     var reset = new Notification("Threshold will reset");
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      var tab = tabs[0];
+      chrome.tabs.sendMessage(tab[0].id, {executed: false}, function(response) {
+        console.log(response.recieved);
+      });
+    });
 };
 
