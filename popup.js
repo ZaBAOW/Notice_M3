@@ -5,24 +5,32 @@ var reset = document.getElementById('reset-btn');
 enable.onclick = function(){
     document.getElementById('enable-btn').disabled = true;
     document.getElementById('disable-btn').disabled = false;
-    enabled = true;
+    document.getElementById('reset-btn').disabled = false;
     console.log("enabling Notify_M3");
-    var turnOn = new Notification("Notify_M3 has been enabled");
-    checkNotifyMe();
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+        var tab = tabs[0];
+        chrome.tabs.sendMessage(tab.id, {enabled: true}, function(response){
+            console.log(response.recieved);
+        });
+    });
 };
 
 disable.onclick = function(){
     document.getElementById('enable-btn').disabled = false;
     document.getElementById('disable-btn').disabled = true;
-    enabled = false;
+    document.getElementById('reset-btn').disabled = true;
     console.log("disabling Notify_M3");
-    var turnOff = new Notification("Notify_M3 has been disabled");
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+        var tab = tabs[0];
+        chrome.tabs.sendMessage(tab.id, {enabled: false}, function(response) {
+            console.log(response.recieved);
+        });
+    });
 };
 
 reset.onclick = function (){
     // executed = false;
     console.log("resetting threshold...");
-    var reset = new Notification("Threshold will reset");
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       var tab = tabs[0];
       chrome.tabs.sendMessage(tab.id, {executed: false}, function(response) {

@@ -48,9 +48,29 @@ chrome.runtime.onMessage.addListener(
         console.log(sender.tab ?
             "from a content script:" + sender.tab.url :
             "from the extension");
-        if (request.executed === false)
+        if (request.executed === false){
+            var reset = new Notification("Threshold will reset");
+            window.EXECUTED = false;
             sendResponse({recieved: "message recieved"});
-        return true;
+            return true;
+        }
+
+        else if(request.enabled === false){
+            window.ENABLED = false;
+            checkNotifyMe();
+            sendResponse({recieved: "will disable Notify_M3"});
+            var turnOn = new Notification("Notify_M3 has been Disabled");
+            return true;
+        }
+        
+        else if(request.enabled === true){
+            window.ENABLED = true;
+            checkNotifyMe();
+            sendResponse({recieved: "will enable Notify_M3"});
+            var turnOff = new Notification("Notify_M3 has been Enabled");
+            return true;
+        }
+        
     });
 
 var countMsgHTML = function(msgHTML) {
