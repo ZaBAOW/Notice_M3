@@ -18,7 +18,10 @@ var htmlBody = $("body")[0];
 
 
 var setThreshold = setInterval(function(){
-	if(!EXECUTED){
+    if(window.ENABLED == false){
+        console.log("Notify_M3 is off");
+    }
+	else if(!EXECUTED){
 		EXECUTED = true;
 		threshold = count * 0.95;
 		var thresh = new Notification("threshold was set.");
@@ -33,7 +36,10 @@ var setThreshold = setInterval(function(){
 
 var noticeMe = setInterval(function(){
 	// var results = new Notification(COUNT + " messages after a minute.");
-	if(count >= threshold){
+    if(window.ENABLED == false){
+        console.log("Notify_M3 is off");
+    }
+	else if(count >= threshold){
 		var notice = new Notification("NOTICE ME!!!");
 	}
 	count = 0;
@@ -57,7 +63,6 @@ chrome.runtime.onMessage.addListener(
 
         else if(request.enabled === false){
             window.ENABLED = false;
-            checkNotifyMe();
             sendResponse({recieved: "will disable Notify_M3"});
             var turnOn = new Notification("Notify_M3 has been Disabled");
             return true;
@@ -65,7 +70,6 @@ chrome.runtime.onMessage.addListener(
         
         else if(request.enabled === true){
             window.ENABLED = true;
-            checkNotifyMe();
             sendResponse({recieved: "will enable Notify_M3"});
             var turnOff = new Notification("Notify_M3 has been Enabled");
             return true;
@@ -145,9 +149,6 @@ function checkNotifyMe(){
     if(ENABLED){
         console.log("Notice_M3 is running");
         notifyMe();
-    }
-    else{
-        console.log("Notice_M3 is not running");
     }
 }
 

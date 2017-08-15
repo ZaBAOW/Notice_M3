@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Counter",
-  "short_name": "Counter",
+  "short_name": "Notice_M3",
   "description": "Sends Notifications to user if 
   something cool happens on a stream but aren't watching",
   "version": "1.0",
