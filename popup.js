@@ -1,3 +1,5 @@
+window.onload = loadSettings();
+
 var disable = document.getElementById('disable-btn');
 var enable = document.getElementById('enable-btn');
 var reset = document.getElementById('reset-btn');
@@ -13,6 +15,7 @@ enable.onclick = function(){
             console.log(response.recieved);
         });
     });
+    saveSettings();
 };
 
 disable.onclick = function(){
@@ -26,6 +29,7 @@ disable.onclick = function(){
             console.log(response.recieved);
         });
     });
+    saveSettings();
 };
 
 reset.onclick = function (){
@@ -39,3 +43,29 @@ reset.onclick = function (){
     });
 };
 
+function saveSettings(){
+    var resetButton = reset;
+    var disableButton = disable;
+    var enableButton = enable;
+
+    chrome.storage.local.set({'resetState': resetButton});
+    chrome.storage.local.set({'disableState': disableButton});
+    chrome.storage.local.set({'enableState': enableButton});
+}
+
+function loadSettings(){
+    var resetState = "";
+    var disableState = "";
+    var enableState = "";
+    chrome.storage.local.get('resetState', function(result){
+        resetState = result.resetState;
+    });
+
+    chrome.storage.local.get('disableState', function(result){
+        disableState = result.disableState;
+    });
+
+    chrome.storage.local.get('enableState', function(result){
+        enableState = result.enableState;
+    })
+}

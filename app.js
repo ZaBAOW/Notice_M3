@@ -64,14 +64,14 @@ chrome.runtime.onMessage.addListener(
         else if(request.enabled === false){
             window.ENABLED = false;
             sendResponse({recieved: "will disable Notify_M3"});
-            var turnOn = new Notification("Notify_M3 has been Disabled");
+            var turnOff = new Notification("Notify_M3 has been Disabled");
             return true;
         }
         
         else if(request.enabled === true){
             window.ENABLED = true;
             sendResponse({recieved: "will enable Notify_M3"});
-            var turnOff = new Notification("Notify_M3 has been Enabled");
+            var turnOn = new Notification("Notify_M3 has been Enabled");
             return true;
         }
         
