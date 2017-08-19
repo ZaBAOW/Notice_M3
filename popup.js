@@ -94,3 +94,4 @@ function loadSettings(){
         enable.disabled = enableState;
     })
 }
+

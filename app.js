@@ -152,5 +152,14 @@ function checkNotifyMe(){
     }
 }
 
+// function checkUrl(){
+//     if(window.location.href === "https://www.twitch.tv"){
+//         console.log("this is a twitch page");
+//     }
+//     else{
+//         console.log("this is not a twitch page");
+//     }
+// }
+
 checkNotifyMe();
 
