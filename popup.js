@@ -95,3 +95,19 @@ function loadSettings(){
     })
 }
 
+function checkUrl(){
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs){
+        var url = tabs[0].url;
+        if(url.includes("twitch.tv")){
+            console.log("this is a twitch webpage");
+        }
+        else{
+            enable.disabled = true;
+            disable.disabled = true;
+            reset.disabled = true;    
+        }
+    });
+}
+
+checkUrl();
+closeTab();
