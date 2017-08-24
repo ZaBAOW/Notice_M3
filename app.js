@@ -16,6 +16,21 @@ window.EXECUTED = false;
 var config = { attributes: true, childList: true, characterData: true };
 var htmlBody = $("body")[0];
 
+var checkStorage = function(){
+    console.log("checking local storage...");
+    if(localStorage.getItem('channelThreshold' === null ||
+    localStorage.getItem('channelThreshold' === 0) )){
+        console.log("threshold has not been set in local storage yet");
+    }
+    else{
+        console.log("Previous threshold will be set as threshold");
+        threshold = localStorage.getItem('channelThreshold');
+        window.EXECUTED = true;
+    }
+    console.log(threshold);
+}
+
+checkStorage();
 
 var setThreshold = setInterval(function(){
     if(window.ENABLED == false){
@@ -24,6 +39,7 @@ var setThreshold = setInterval(function(){
 	else if(!EXECUTED){
 		EXECUTED = true;
 		threshold = count * 0.95;
+        localStorage.channelThreshold = threshold;     
 		var thresh = new Notification("threshold was set.");
 	}
 }, 59 * 1000);
