@@ -13,9 +13,11 @@ Notice_M3 will then check its results every minute against the threshold, and wi
 user if that result is equal to or greater than the set threshold.
 
 Future features to be added:
-  - A timer that will set COUNT to 0 if THRESHOLD is not met within a timelimit.
-  - An algorithm that will test for messages/min and will set a THRESHOLD.
-      - Will need to create ranges for THRESHOLD, ergo will need to research via another application.
+  - A timer that will set COUNT to 0 if THRESHOLD is not met within a timelimit.(added)
+  - An algorithm that will test for messages/min and will set a THRESHOLD.(added)
+  - actions of content scripts will resemble what buttons are active in popup window, when
+   twitch stream is reloaded.
+  - Local storage that will contain stream chat data (messages/minute)
 
 Installment Intructions:
 1. Clone/Download files from the repository into a file you can find.
@@ -29,6 +31,9 @@ Installment Intructions:
 Notes: 
 - This extension will only work on twitch streams, it will not activate
 on any other page on twitch (i.e. directory, products, settings).
+- If you are not on a twitch webpage, the buttons in the popup window will
+ become inactive signalling that the extension is not active on the current
+ site.
 - At the moment the first minute of counting is skewed due to the 50 initial
 messages that load in simultaneoulsy when opening a stream.
 - If you switch steams on the same tab, you have to reload the page for the 
