@@ -18,8 +18,8 @@ var htmlBody = $("body")[0];
 
 var checkStorage = function(){
     console.log("checking local storage...");
-    if(localStorage.getItem('channelThreshold' === null ||
-    localStorage.getItem('channelThreshold' === 0) )){
+    if(localStorage.getItem('channelThreshold') === null ||
+    localStorage.getItem('channelThreshold') === "0"){
         console.log("threshold has not been set in local storage yet");
     }
     else{
@@ -56,10 +56,16 @@ var noticeMe = setInterval(function(){
         console.log("Notify_M3 is off");
     }
 	else if(count >= threshold){
-		var notice = new Notification("NOTICE ME!!!");
+		noticeNotify();
 	}
 	count = 0;
 }, 60 * 1000);
+
+function noticeNotify(){
+    var notification = chrome.notifications.create("", {
+        message: "NOTICE ME!!!"
+    });
+}
 
 var checkEnable = setInterval(function(){
     console.log(EXECUTED);

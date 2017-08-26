@@ -43,6 +43,7 @@
   "permissions": [
     "activeTab",
     "storage",
+    "notifications",
     "https://ajax.googleapis.com/",
     "https://www.twitch.tv/*"
   ]
