@@ -12,6 +12,9 @@ var threshold = 0;
 var count = 0;
 var RESULT = count;
 window.EXECUTED = false;
+var noticeBody = "NOTICE ME!!!";
+var noticeTitle = "NOTICE ME!!!";
+var noticeIcon = "";
 
 var config = { attributes: true, childList: true, characterData: true };
 var htmlBody = $("body")[0];
@@ -57,14 +60,18 @@ var noticeMe = setInterval(function(){
     }
 	else if(count >= threshold){
 		noticeNotify();
+        // var n = new Notification("NOTICE ME!!!", {icon: "notice-icon.png"});
 	}
 	count = 0;
 }, 60 * 1000);
 
-function noticeNotify(){
-    var notification = chrome.notifications.create("", {
-        message: "NOTICE ME!!!"
-    });
+function noticeNotify(noticeBody, noticeIcon, noticeTitle){
+    var options = {
+        body: noticeBody,
+        icon: noticeIcon
+    }
+
+    var n = new Notification(noticeTitle, options);
 }
 
 var checkEnable = setInterval(function(){
