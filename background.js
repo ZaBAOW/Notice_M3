@@ -12,15 +12,14 @@ var threshold = 0;
 var count = 0;
 var RESULT = count;
 window.EXECUTED = false;
-var noticeBody = "NOTICE ME!!!";
-var noticeTitle = "NOTICE ME!!!";
-var noticeIcon = "";
+var appIcon = new Image();
+appIcon.src = 'notice-icon.pgn';
 
 var config = { attributes: true, childList: true, characterData: true };
 var htmlBody = $("body")[0];
 
-var checkStorage = function(){
-    console.log("checking local storage...");
+var checkStorageThreshold = function(){
+    console.log("checking local storage for previous theshold...");
     if(localStorage.getItem('channelThreshold') === null ||
     localStorage.getItem('channelThreshold') === "0"){
         console.log("threshold has not been set in local storage yet");
@@ -33,7 +32,19 @@ var checkStorage = function(){
     console.log(threshold);
 }
 
-checkStorage();
+checkStorageThreshold();
+
+var checkStorageEnable = function(){
+    console.log("checking if app was enabled...");
+    if(localStorage.getItem('enableState') === null){
+        console.log("this is the users first use of the app or they have yet to interact with the enable/disable settings");
+    }
+    else{
+        window.ENABLED = localStorage.getItem('enableState');
+    }
+}
+
+checkStorageEnable();
 
 var setThreshold = setInterval(function(){
     if(window.ENABLED == false){
@@ -59,19 +70,20 @@ var noticeMe = setInterval(function(){
         console.log("Notify_M3 is off");
     }
 	else if(count >= threshold){
-		noticeNotify();
+        spawnNotification("NOTICE ME!!!", "notice-icon.png", "Notice_M3");
         // var n = new Notification("NOTICE ME!!!", {icon: "notice-icon.png"});
 	}
 	count = 0;
 }, 60 * 1000);
 
-function noticeNotify(noticeBody, noticeIcon, noticeTitle){
+function spawnNotification(noticeBody, noticeIcon, noticeTitle){
     var options = {
         body: noticeBody,
         icon: noticeIcon
     }
 
     var n = new Notification(noticeTitle, options);
+    setTimeout(n.close.bind(n), 4000);
 }
 
 var checkEnable = setInterval(function(){
@@ -94,6 +106,7 @@ chrome.runtime.onMessage.addListener(
             window.ENABLED = false;
             sendResponse({recieved: "will disable Notify_M3"});
             var turnOff = new Notification("Notify_M3 has been Disabled");
+            localStorage.enableState = window.ENABLED;
             return true;
         }
         
@@ -101,6 +114,7 @@ chrome.runtime.onMessage.addListener(
             window.ENABLED = true;
             sendResponse({recieved: "will enable Notify_M3"});
             var turnOn = new Notification("Notify_M3 has been Enabled");
+            localStorage.enableState = window.ENABLED;
             return true;
         }
         
@@ -158,13 +172,15 @@ function notifyMe() {
         alert("This browser does not support desktop notification")
         console.log("browser not supported");
     } else if (Notification.permission === "granted") {
-        var notification = new Notification("Hi there!");
+        // var notification = new Notification("Hi there!");
+        spawnNotification("Hi There!", "appIcon", "Notice_M3");
         chatLoadedObserver.observe(htmlBody, config);
         console.log("permission was already granted");
     } else if (Notification.permission !== "denied") {
         Notification.requestPermission(function(permission) {
             if (permission === "granted") {
-                var notification = new Notification("Hi there");
+                // var notification = new Notification("Hi there");
+                spawnNotification("Hi There!", "appIcon", "Notice_M3");
                 chatLoadedObserver.observe(htmlBody, config);
                 console.log("permission was granted");
             }
