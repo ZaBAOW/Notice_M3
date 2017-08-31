@@ -13,7 +13,7 @@ var count = 0;
 var RESULT = count;
 window.EXECUTED = false;
 var appIcon = new Image();
-appIcon.src = 'notice-icon.pgn';
+appIcon.src = '/notice-icon.png';
 
 var config = { attributes: true, childList: true, characterData: true };
 var htmlBody = $("body")[0];
@@ -39,8 +39,11 @@ var checkStorageEnable = function(){
     if(localStorage.getItem('enableState') === null){
         console.log("this is the users first use of the app or they have yet to interact with the enable/disable settings");
     }
-    else{
-        window.ENABLED = localStorage.getItem('enableState');
+    else if(localStorage.getItem('enableState') == "false"){
+        window.ENABLED = false;
+    }
+    else if(localStorage.getItem('enableState') ==  true){
+        window.ENABLED = true;
     }
 }
 
@@ -194,6 +197,9 @@ function checkNotifyMe(){
     if(ENABLED){
         console.log("Notice_M3 is running");
         notifyMe();
+    }
+    else{
+        console.log("Motice_M3 is not running");
     }
 }
 
