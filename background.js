@@ -90,6 +90,7 @@ function spawnNotification(theBody, theIcon, theTitle){
     n.onclick = function(event){
         event.preventDefault();
         console.log("notification clicked");
+        n.close();
     }
 }
 
