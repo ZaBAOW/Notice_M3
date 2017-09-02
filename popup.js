@@ -1,8 +1,11 @@
 var disable = document.getElementById('disable-btn');
 var enable = document.getElementById('enable-btn');
 var reset = document.getElementById('reset-btn');
+var currentThreshold = localStorage.getItem("channelThreshold");
 
 window.onload = loadSettings();
+
+// document.write("<span id = 'curThreshold'>"+ "Current Threshold: " + currentThreshold +"</span>");
 
 enable.onclick = function(){
     enable.disabled = true;

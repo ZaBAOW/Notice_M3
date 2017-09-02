@@ -73,20 +73,24 @@ var noticeMe = setInterval(function(){
         console.log("Notify_M3 is off");
     }
 	else if(count >= threshold){
-        spawnNotification("NOTICE ME!!!", "notice-icon.png", "Notice_M3");
+        spawnNotification("NOTICE ME!!!", appIcon, "Notice_M3");
         // var n = new Notification("NOTICE ME!!!", {icon: "notice-icon.png"});
 	}
 	count = 0;
 }, 60 * 1000);
 
-function spawnNotification(noticeBody, noticeIcon, noticeTitle){
+function spawnNotification(theBody, theIcon, theTitle){
     var options = {
-        body: noticeBody,
-        icon: noticeIcon
+        body: theBody,
+        icon: theIcon
     }
 
-    var n = new Notification(noticeTitle, options);
-    setTimeout(n.close.bind(n), 4000);
+    var n = new Notification(theTitle, options);
+    setTimeout(n.close.bind(n), 5000);
+    n.onclick = function(event){
+        event.preventDefault();
+        console.log("notification clicked");
+    }
 }
 
 var checkEnable = setInterval(function(){
@@ -176,14 +180,14 @@ function notifyMe() {
         console.log("browser not supported");
     } else if (Notification.permission === "granted") {
         // var notification = new Notification("Hi there!");
-        spawnNotification("Hi There!", "appIcon", "Notice_M3");
+        spawnNotification("Hi There!", appIcon, "Notice_M3");
         chatLoadedObserver.observe(htmlBody, config);
         console.log("permission was already granted");
     } else if (Notification.permission !== "denied") {
         Notification.requestPermission(function(permission) {
             if (permission === "granted") {
                 // var notification = new Notification("Hi there");
-                spawnNotification("Hi There!", "appIcon", "Notice_M3");
+                spawnNotification("Hi There!", appIcon, "Notice_M3");
                 chatLoadedObserver.observe(htmlBody, config);
                 console.log("permission was granted");
             }
