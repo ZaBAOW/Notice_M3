@@ -14,6 +14,7 @@ var RESULT = count;
 window.EXECUTED = false;
 var appIcon = new Image();
 appIcon.src = '/notice-icon.png';
+var channelIcon = document.getElementsByClassName("cn-bar__avatar");
 
 var config = { attributes: true, childList: true, characterData: true };
 var htmlBody = $("body")[0];
@@ -57,7 +58,7 @@ var setThreshold = setInterval(function(){
 		EXECUTED = true;
 		threshold = count * 0.95;
         localStorage.channelThreshold = threshold;     
-		var thresh = new Notification("threshold was set.");
+		spawnNotification("threshold was set.", appIcon, "Notice_M3");
 	}
 }, 59 * 1000);
 
@@ -90,6 +91,7 @@ function spawnNotification(theBody, theIcon, theTitle){
     n.onclick = function(event){
         event.preventDefault();
         console.log("notification clicked");
+        window.focus();
         n.close();
     }
 }
@@ -104,7 +106,7 @@ chrome.runtime.onMessage.addListener(
             "from a content script:" + sender.tab.url :
             "from the extension");
         if (request.executed === false){
-            var reset = new Notification("Threshold will reset");
+            spawnNotification("threshold will reset.", appIcon, "Notice_M3");
             window.EXECUTED = false;
             sendResponse({recieved: "message recieved"});
             return true;
@@ -113,7 +115,7 @@ chrome.runtime.onMessage.addListener(
         else if(request.enabled === false){
             window.ENABLED = false;
             sendResponse({recieved: "will disable Notify_M3"});
-            var turnOff = new Notification("Notify_M3 has been Disabled");
+            spawnNotification("Notify_M3 has been Disabled.", appIcon, "Notice_M3");
             localStorage.enableState = window.ENABLED;
             return true;
         }
@@ -121,7 +123,7 @@ chrome.runtime.onMessage.addListener(
         else if(request.enabled === true){
             window.ENABLED = true;
             sendResponse({recieved: "will enable Notify_M3"});
-            var turnOn = new Notification("Notify_M3 has been Enabled");
+            spawnNotification("Notify_M3 has been Enabled.", appIcon, "Notice_M3");
             localStorage.enableState = window.ENABLED;
             return true;
         }
@@ -181,14 +183,14 @@ function notifyMe() {
         console.log("browser not supported");
     } else if (Notification.permission === "granted") {
         // var notification = new Notification("Hi there!");
-        spawnNotification("Hi There!", appIcon, "Notice_M3");
+        spawnNotification("Hi There!", channelIcon, "Notice_M3");
         chatLoadedObserver.observe(htmlBody, config);
         console.log("permission was already granted");
     } else if (Notification.permission !== "denied") {
         Notification.requestPermission(function(permission) {
             if (permission === "granted") {
                 // var notification = new Notification("Hi there");
-                spawnNotification("Hi There!", appIcon, "Notice_M3");
+                spawnNotification("Hi There!", channelIcon, "Notice_M3");
                 chatLoadedObserver.observe(htmlBody, config);
                 console.log("permission was granted");
             }
