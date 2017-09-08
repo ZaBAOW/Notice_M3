@@ -17,7 +17,6 @@ var channelIcon;
 var channelName;
 
 var getChannelInfo = setInterval(function(){
-    console.log("channel Loaded!");
     channelIcon = $('.cn-bar__avatar').attr('src');
     channelName = $('.cn-bar__displayname').html();
 }, 5000);
@@ -72,7 +71,7 @@ var setThreshold = setInterval(function(){
 	else if(!EXECUTED){
 		EXECUTED = true;
 		threshold = count * 0.95;
-        localStorage.channelThreshold = threshold;     
+        localStorage.channelThreshold = threshold;
 		spawnTwitchNotification("threshold was set.", channelIcon, channelName);
 	}
 }, 59 * 1000);
@@ -159,13 +158,17 @@ chrome.runtime.onMessage.addListener(
             localStorage.enableState = window.ENABLED;
             return true;
         }
-        
+        else if(request){
+            console.log("threshold sent to popup: " + threshold);
+            chrome.runtime.sendMessage({data:threshold}, function(response){
+            });
+        }
     });
 
 var countMsgHTML = function(msgHTML) {
     count += 1;
-    console.log("found a message");
-    console.log(count);
+    // console.log("found a message");
+    // console.log(count);
 };
 
 function chatObserver() {

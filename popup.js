@@ -2,6 +2,7 @@ var disable = document.getElementById('disable-btn');
 var enable = document.getElementById('enable-btn');
 var reset = document.getElementById('reset-btn');
 var currentThreshold = localStorage.getItem("channelThreshold");
+var popThreshold = 0;
 
 window.onload = loadSettings();
 
@@ -97,6 +98,19 @@ function loadSettings(){
         enable.disabled = enableState;
     })
 }
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    var tab = tabs[0];
+    chrome.tabs.sendMessage(tab.id, {}, function(response){
+    console.log("request for threshold sent");
+    });
+});
+
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+        console.log("threshold recieved");
+        var popThreshold = JSON.stringify(request.data);
+        document.write(popThreshold);
+    });
 
 function checkUrl(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs){
