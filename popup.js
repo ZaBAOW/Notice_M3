@@ -109,7 +109,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         console.log("threshold recieved");
         var popThreshold = JSON.stringify(request.data);
-        document.write(popThreshold);
+        document.getElementById('currentThreshold').innerHTML = popThreshold;
     });
 
 function checkUrl(){
