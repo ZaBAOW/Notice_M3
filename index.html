@@ -4,14 +4,36 @@
 	<title></title>
 	<link rel="manifest" href="manifest.json">
 	<link rel="stylesheet" type="text/css" href="main.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
-	<div>Notice_M3 Ver. 1.00</div>
-	<button id='enable-btn' type='button' disabled>Enable</button>
-	<button id='disable-btn' type='button'>Disable</button>
-	<button id='reset-btn' type='button'>Reset Threshold</button>
+<body id="popupWindow">
+	<img src="http://i.imgur.com/KS6rJQU.png" id="appImage">
+	<div id="title">Notice_M3 Ver. 0.1.0</div>
+	<hr>
+	<div id="container-1">
+		<div id="subcontainer-1">
+			<i style="font-size:24px" class="fa">&#xf00c;</i>
+			<button id='enable-btn' type='button'>Enable</i></button>
+		</div>
+		<div id="subcontainer-2">
+			<i class="material-icons">&#xe5cd;</i>
+			<button id='disable-btn' type='button'>Disable</button>
+		</div>
+	</div>
+	<hr>
+	<div id="container-2">
+		<div id="subcontainer-3">
+			<span id="valueReference">The current threshold is: </span>
+			<span id="currentThreshold"></span>
+		</div>
+		<div id="subcontainer-4">
+			<i class="material-icons" id="refresh">&#xe5d5;</i>
+			<button id='reset-btn' type='button'>Reset Threshold</button>
+		</div>
+	</div>
 	<script src="jquery-3.2.1.min.js"></script>
 	<script src="popup.js" type="text/javascript"></script>
-	<script src="app.js"  type="text/javascript"></script>
+	<script src="background.js"  type="text/javascript"></script>
 </body>
 </html>

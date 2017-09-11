@@ -1,13 +1,17 @@
-window.onload = loadSettings();
-
 var disable = document.getElementById('disable-btn');
 var enable = document.getElementById('enable-btn');
 var reset = document.getElementById('reset-btn');
+var currentThreshold = localStorage.getItem("channelThreshold");
+var popThreshold = 0;
+
+window.onload = loadSettings();
+
+// document.write("<span id = 'curThreshold'>"+ "Current Threshold: " + currentThreshold +"</span>");
 
 enable.onclick = function(){
-    document.getElementById('enable-btn').disabled = true;
-    document.getElementById('disable-btn').disabled = false;
-    document.getElementById('reset-btn').disabled = false;
+    enable.disabled = true;
+    disable.disabled = false;
+    reset.disabled = false;
     console.log("enabling Notify_M3");
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         var tab = tabs[0];
@@ -15,13 +19,13 @@ enable.onclick = function(){
             console.log(response.recieved);
         });
     });
-    saveSettings();
+    saveEnable();
 };
 
 disable.onclick = function(){
-    document.getElementById('enable-btn').disabled = false;
-    document.getElementById('disable-btn').disabled = true;
-    document.getElementById('reset-btn').disabled = true;
+    enable.disabled = false;
+    disable.disabled = true;
+    reset.disabled = true;
     console.log("disabling Notify_M3");
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         var tab = tabs[0];
@@ -29,7 +33,7 @@ disable.onclick = function(){
             console.log(response.recieved);
         });
     });
-    saveSettings();
+    saveDisable();
 };
 
 reset.onclick = function (){
@@ -43,14 +47,36 @@ reset.onclick = function (){
     });
 };
 
-function saveSettings(){
-    var resetButton = reset;
-    var disableButton = disable;
-    var enableButton = enable;
+chrome.storage.onChanged.addListener(function(changes, local){
+    for (key in changes) {
+        var storageChange = changes[key];
+        console.log('Storage key "%s" in namespace "%s" changed. ' + 
+            'Old value was "%s", new value is "%s"',
+            key,
+            local,
+            storageChange.oldValue,
+            storageChange.newValue);
+    }
+})
 
-    chrome.storage.local.set({'resetState': resetButton});
-    chrome.storage.local.set({'disableState': disableButton});
-    chrome.storage.local.set({'enableState': enableButton});
+function saveEnable(){
+    var resetButton = reset.disabled;
+    var disableButton = disable.disabled;
+    var enableButton = enable.disabled;
+    chrome.storage.local.set({'resetState': resetButton, 
+                              'disableState': disableButton,
+                              'enableState': enableButton});
+    console.log("saving settings");
+}
+
+function saveDisable(){
+    var resetButton = reset.disabled;
+    var disableButton = disable.disabled;
+    var enableButton = enable.disabled;
+    chrome.storage.local.set({'resetState': resetButton, 
+                              'disableState': disableButton,
+                              'enableState': enableButton});
+    console.log("saving settings");
 }
 
 function loadSettings(){
@@ -59,13 +85,45 @@ function loadSettings(){
     var enableState = "";
     chrome.storage.local.get('resetState', function(result){
         resetState = result.resetState;
+        reset.disabled = resetState;
     });
 
     chrome.storage.local.get('disableState', function(result){
         disableState = result.disableState;
+        disable.disabled = disableState;
     });
 
     chrome.storage.local.get('enableState', function(result){
         enableState = result.enableState;
+        enable.disabled = enableState;
     })
 }
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    var tab = tabs[0];
+    chrome.tabs.sendMessage(tab.id, {}, function(response){
+    console.log("request for threshold sent");
+    });
+});
+
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
+        console.log("threshold recieved");
+        var popThreshold = JSON.stringify(request.data);
+        document.getElementById('currentThreshold').innerHTML = popThreshold;
+    });
+
+function checkUrl(){
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs){
+        var url = tabs[0].url;
+        if(url.includes("://www.twitch.tv/")){
+            console.log("this is a twitch webpage");
+        }
+        else{
+            enable.disabled = true;
+            disable.disabled = true;
+            reset.disabled = true;    
+        }
+    });
+}
+
+checkUrl();
