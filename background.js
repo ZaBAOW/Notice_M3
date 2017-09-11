@@ -19,7 +19,7 @@ var channelName;
 var getChannelInfo = setInterval(function(){
     channelIcon = $('.cn-bar__avatar').attr('src');
     channelName = $('.cn-bar__displayname').html();
-}, 5000);
+}, 3000);
 
 // var channelIcon.onload = $("cn-bar__avatar").attr("src");
 
@@ -120,16 +120,10 @@ function spawnTwitchNotification(theBody, theIcon, theTitle){
     setTimeout(n.close.bind(n), 5000);
     n.onclick = function(event){
         event.preventDefault();
-        console.log("notification clicked");
         window.focus();
         n.close();
     }
 }
-
-
-var checkEnable = setInterval(function(){
-    console.log(EXECUTED);
-}, 5000);
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse){
@@ -167,8 +161,7 @@ chrome.runtime.onMessage.addListener(
 
 var countMsgHTML = function(msgHTML) {
     count += 1;
-    // console.log("found a message");
-    // console.log(count);
+    console.log(count);
 };
 
 function chatObserver() {

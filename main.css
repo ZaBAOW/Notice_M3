@@ -7,6 +7,10 @@ body{
 	margin: 0px;
 }
 
+#popupWindow{
+
+}
+
 #appImage{
 	width: 50px;
 	height: 35px;
@@ -25,6 +29,24 @@ button{
 	width: 45%;
 }
 
+#subcontainer-1{
+	display: block;
+}
+
+#subcontainer-2{
+	display: block;
+}
+
+#subcontainer-3{
+	display: block;
+	padding-bottom: 5px;
+	margin-left: 25px;
+}
+
+#subcontainer-4{
+	display: block;
+}
+
 button#enable-btn{
 	margin-top: 10px;
 }
@@ -35,7 +57,7 @@ button#disable-btn{
 
 #reset-btn{
 	width: 80%;
-	display: block;
+	display: inline-block;
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 5px;
@@ -47,19 +69,19 @@ hr{
 }
 
 span#currentThrehold{
-	margin-left: 25px;
+	position: absolute;
+	left: 25px;
 }
 
 i.fa{
-	display: inline;
 	color: green;
 }
 
 i.material-icons{
-	display: table;
 	color: red;
 }
 
 i#refresh{
+	display: inline-block;
 	color: black;
 }
