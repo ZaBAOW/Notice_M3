@@ -13,11 +13,10 @@ Notice_M3 will then check its results every minute against the threshold, and wi
 user if that result is equal to or greater than the set threshold.
 
 Future features to be added:
-  - A timer that will set COUNT to 0 if THRESHOLD is not met within a timelimit.(added)
-  - An algorithm that will test for messages/min and will set a THRESHOLD.(added)
-  - actions of content scripts will resemble what buttons are active in popup window, when
-   twitch stream is reloaded.
-  - Local storage that will contain stream chat data (messages/minute)
+  - Enable/Disable buttons in the popup window will be merged into one button
+    in order to simplify the contents of the window.
+  - An object array containing multiple messages that can appaer in the notifyme
+    notification to keep notification from becoming stale.
 
 Installment Intructions:
 1. Clone/Download files from the repository into a file you can find.
@@ -29,14 +28,25 @@ Installment Intructions:
 7. enable extension and you done.
 
 Notes: 
-- This extension will only work on twitch streams, it will not activate
-on any other page on twitch (i.e. directory, products, settings).
+- This extension will only work on any website with the domain
+"twitch.tv".  This means that it will be active on any page of
+the twitch website.
 - If you are not on a twitch webpage, the buttons in the popup window will
  become inactive signalling that the extension is not active on the current
  site.
+- The application will only be able to parse twitch chant if chat is open in the
+window.  Closing the chat window will cause the page to stop creating new twitch message
+elements which the app looks for. Ultimately this will cause a discrepancy in the app's
+threshold value.
+    - If a discrepancy in the threshold value is noticed, use the "reset threshold" button
+      in the popup window.
 - At the moment the first minute of counting is skewed due to the 50 initial
 messages that load in simultaneoulsy when opening a stream.
+- Disabling the application via the button in the popup window, will only disable
+the applications ability to send notifications, not its ability to parse twitch chat
 - If you switch steams on the same tab, you have to reload the page for the 
 app to re-execute signaled by the "Hi there!" notification.
 - A "NOTICE ME!!!" notification will always appear after the first minute, as that is
 when the threshold is set.
+- When switching the app from disabled to enabled, the page will have to be reloaded
+to get the app to actually re-enable.
