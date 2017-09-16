@@ -20,6 +20,10 @@ Future features to be added:
 
 Installment Intructions:
 1. Clone/Download files from the repository into a file you can find.
+    - For those who do not know how to clone/download a repo here is a link to a
+      tutorial (https://help.github.com/articles/cloning-a-repository/).
+    - git bash is required for this step, here is the link to download the
+      software (https://git-scm.com/downloads).
 2. Open google chrome go to extension manager page (chrome://extensions).
 3. Check Developer mode box at the top of the page
 4. Click "Load unpacked extension..." button.
