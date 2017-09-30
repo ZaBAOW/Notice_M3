@@ -29,7 +29,7 @@ Installment Intructions:
 4. Click "Load unpacked extension..." button.
 5. Find the folder you put the files into and press "ok".
 6. Counter extension should pop up in the extensions list.
-7. enable extension and you done.
+7. enable extension and you're done.
 
 Notes: 
 - This extension will only work on any website with the domain
