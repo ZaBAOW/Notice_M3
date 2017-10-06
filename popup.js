@@ -115,7 +115,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 function checkUrl(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs){
         var url = tabs[0].url;
-        if(url.includes("://www.twitch.tv/")){
+        if(url.includes("twitch.tv/")){
             console.log("this is a twitch webpage");
         }
         else{

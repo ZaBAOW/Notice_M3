@@ -3,8 +3,7 @@
 
   "name": "Notice_M3",
   "short_name": "Notice_M3",
-  "description": "Sends Notifications to user if 
-  something cool happens on a stream but aren't watching",
+  "description": "Sends Notifications to user if something cool happens on a stream but aren't watching",
   "version": "1.0",
   "background": {
     "scripts": ["background.js"],
