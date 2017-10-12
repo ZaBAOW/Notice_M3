@@ -1,6 +1,11 @@
 # Notice_M3 Readme
 A chrome browser extension that connects to Twitches chat channels and notifies users of increased rate in chat messages that are sent to the channel.
 
+DISCLAIMER: Twitch is currently beta testing a newer version of the twitch UI.  Notice_M3 currently does not work
+on the beta version of twitch.  If you have the beta version active, but want Notice_M3 to work, simply open the
+drop down menu with the arrow located in the top right corner of the window, and uncheck the box next to "beta site".
+This will bring you back to the original version of the site and Notice_me will work.
+
 Notice_M3's use:
 The purpose of Notice_M3 is to help users know if something of note 
 has occured on a twitch stream that they have running, but are not actively watching by reading 
