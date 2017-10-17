@@ -3,6 +3,9 @@ var enable = document.getElementById('enable-btn');
 var reset = document.getElementById('reset-btn');
 var currentThreshold = localStorage.getItem("channelThreshold");
 var popThreshold = 0;
+const regex = /[a-zA-Z0-9]+.twitch.tv/g;
+const str = ``;
+let m;
 
 window.onload = loadSettings();
 
@@ -16,7 +19,11 @@ enable.onclick = function(){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         var tab = tabs[0];
         chrome.tabs.sendMessage(tab.id, {enabled: true}, function(response){
-            console.log(response.recieved);
+            if(response === null){
+                console.log('response = ', response);
+        } else{
+            // console.log(response.recieved);
+            }   
         });
     });
     saveEnable();
@@ -30,7 +37,11 @@ disable.onclick = function(){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         var tab = tabs[0];
         chrome.tabs.sendMessage(tab.id, {enabled: false}, function(response) {
-            console.log(response.recieved);
+            if(response === null){
+                console.log('response = ', response);
+        } else{
+            // console.log(response.recieved);
+            }   
         });
     });
     saveDisable();
@@ -42,7 +53,11 @@ reset.onclick = function (){
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       var tab = tabs[0];
       chrome.tabs.sendMessage(tab.id, {executed: false}, function(response) {
-        console.log(response.recieved);
+        if(response === null){
+                console.log('response = ', response);
+        } else{
+            // console.log(response.recieved);
+            }   
       });
     });
 };
@@ -112,11 +127,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         document.getElementById('currentThreshold').innerHTML = popThreshold;
     });
 
+
 function checkUrl(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs){
         var url = tabs[0].url;
-        if(url.includes("twitch.tv/")){
-            console.log("this is a twitch webpage");
+        var matches_url = url.match(regex);
+        if (matches_url !== null) {
+            console.log("this is a twitch website");
         }
         else{
             enable.disabled = true;

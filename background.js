@@ -170,7 +170,7 @@ function chatObserver() {
         mutations.forEach(function(mutation) {
             mutation.addedNodes.forEach(function(addedNode) {
                 var chatMessage = $(addedNode);
-                if (!chatMessage.is(".chat-line", ".message-line")) {
+                if (!chatMessage.is(".chat-line__message", ".message-line")) {
                     return;
                 }
                 var messageElement = chatMessage.children('.message');
@@ -185,7 +185,7 @@ var chatSearcher = chatObserver();
 
 var chatLoadedObserver = new MutationObserver(function(mutation, observer) {
     mutation.forEach(function(mutation) {
-        var chatSelector = $(".chat-lines");
+        var chatSelector = $(".chat-list__lines");
         // var liveSelector = $(".player-streamstatus__label");
         // if (liveSelector === "Offline"){
         // 	var offline = new Notification("The stream is not currently live Notice_M3 will not run.");
