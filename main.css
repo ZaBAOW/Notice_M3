@@ -12,12 +12,18 @@ body{
 }
 
 #appImage{
+	position: relative;
+	left: 40px;
+	top: 10px;
 	width: 50px;
 	height: 35px;
+	display: inline-block;
 }
 
 #title{
 	display: inline-block;
+	position: relative;
+	left: 40px;
 }
 
 button{
@@ -75,10 +81,14 @@ span#currentThrehold{
 
 i.fa{
 	color: green;
+	position: relative;
+	top: 5px;
 }
 
 i.material-icons{
 	color: red;
+	position: relative;
+	top: 10px;
 }
 
 i#refresh{
