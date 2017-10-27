@@ -59,3 +59,5 @@ app to re-execute signaled by the "Hi there!" notification.
 when the threshold is set.
 - When switching the app from disabled to enabled, the page will have to be reloaded
 to get the app to actually re-enable.
+- If you are viewing multiple streams, in order to get the repective stream's threshold
+you will have to reset the threshold.
