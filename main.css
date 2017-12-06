@@ -26,15 +26,6 @@ body{
 	left: 40px;
 }
 
-button{
-	display: inline-block;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	width: 45%;
-}
-
 #subcontainer-1{
 	display: block;
 }
@@ -53,12 +44,22 @@ button{
 	display: block;
 }
 
-button#enable-btn{
-	margin-top: 10px;
+#enable-btn{
+	margin-top: 15px;
+	display: inline-block;
+	padding-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 45%;
 }
 
-button#disable-btn{
+#disable-btn{
 	display: inline-block;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 45%;
 }
 
 #reset-btn{
@@ -70,11 +71,11 @@ button#disable-btn{
 	padding-bottom: 5px;
 }
 
-hr{
+.separator{
 	width: 90%;
 }
 
-span#currentThrehold{
+#currentThrehold{
 	position: absolute;
 	left: 25px;
 }
