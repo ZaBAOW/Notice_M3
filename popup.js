@@ -8,6 +8,7 @@ window.onload = loadSettings();
 
 // document.write("<span id = 'curThreshold'>"+ "Current Threshold: " + currentThreshold +"</span>");
 
+// function executes when the enable button is clicked by the user. It will set disable values for each button on the popup window and save the values for later loads of the popup window. Finally it will notify the user of the action via a desktop notification.
 enable.onclick = function(){
     enable.disabled = true;
     disable.disabled = false;
@@ -22,6 +23,7 @@ enable.onclick = function(){
     saveEnable();
 };
 
+// function executes when the disable button is clicked by the user. It will set disable values for each button on the popup window and save the values for later loads of the popup window. Finally it will notify the user of the action via a desktop notification.
 disable.onclick = function(){
     enable.disabled = false;
     disable.disabled = true;
@@ -36,6 +38,7 @@ disable.onclick = function(){
     saveDisable();
 };
 
+// function executes when the "Reset Threshold" button is clicked by the user. Initially it will notify the user of the action being performed. It will then cause the "window.EXECUTED" value in backgound.js to change from true to false allowing the setThreshold function to run, ultimately reseting the current threshold value located in local storage. 
 reset.onclick = function (){
     // executed = false;
     console.log("resetting threshold...");
@@ -47,6 +50,7 @@ reset.onclick = function (){
     });
 };
 
+//This function executes when there is a change in value found in local storage. The results of this function will only be seen in the console. 
 chrome.storage.onChanged.addListener(function(changes, local){
     for (key in changes) {
         var storageChange = changes[key];
@@ -59,6 +63,7 @@ chrome.storage.onChanged.addListener(function(changes, local){
     }
 })
 
+//This function is utilized at the end of the enable.onclick function. It retrieves the new disable values of each of the buttons in the popup window and sends them to local storage. The saved values will then be used the next time the window is loaded.
 function saveEnable(){
     var resetButton = reset.disabled;
     var disableButton = disable.disabled;
@@ -69,6 +74,7 @@ function saveEnable(){
     console.log("saving settings");
 }
 
+//This function is utilized at the end of the disable.onclick function. It retrieves the new disable values of each of the buttons in the popup window and sends them to local storage. The saved values will then be used the next time the window is loaded.
 function saveDisable(){
     var resetButton = reset.disabled;
     var disableButton = disable.disabled;
@@ -79,6 +85,7 @@ function saveDisable(){
     console.log("saving settings");
 }
 
+// function executes on popup window load. Retrieves local storage variables set by both saveDisable() and saveEnable(). results will cause buttons to show up either as clickable or not clickable.   
 function loadSettings(){
     var resetState = "";
     var disableState = "";
@@ -98,6 +105,8 @@ function loadSettings(){
         enable.disabled = enableState;
     })
 }
+
+//function executes after user clicks "Reset Threshold" button. function will send a request to background.js for current threshold variable.
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
     var tab = tabs[0];
     chrome.tabs.sendMessage(tab.id, {}, function(response){
@@ -105,13 +114,14 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
     });
 });
 
-
+//function executes after recieving response from background.js. Will add recieved currentThreshold value to "current threshold" section of the popup window.(atm trying to get function to add value to input element.)
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
         console.log("threshold recieved");
         var popThreshold = JSON.stringify(request.data);
         document.getElementById('currentThreshold').innerHTML = popThreshold;
     });
 
+//function executes after popup window loads. Will check the url of the currently focused tab in the browser window. If the condition of the if statement is found true, Notice_M3 will function. If else condition is met, Notice_M3 will disable all interactable functions of the popup window.
 function checkUrl(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function(tabs){
         var url = tabs[0].url;
