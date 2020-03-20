@@ -17,8 +17,8 @@ var channelIcon;
 var channelName;
 
 var getChannelInfo = setInterval(function(){
-    channelIcon = $('.cn-bar__avatar').attr('src');
-    channelName = $('.cn-bar__displayname').html();
+    channelIcon = $('.tw-image-avatar').attr('src');
+    channelName = $('.channel-header-user-tab__user-content tw-c-text-inherit').html();
 }, 3000);
 
 // var channelIcon.onload = $("cn-bar__avatar").attr("src");
@@ -185,7 +185,7 @@ var chatSearcher = chatObserver();
 
 var chatLoadedObserver = new MutationObserver(function(mutation, observer) {
     mutation.forEach(function(mutation) {
-        var chatSelector = $(".chat-lines");
+        var chatSelector = $(".chat-line__message");
         // var liveSelector = $(".player-streamstatus__label");
         // if (liveSelector === "Offline"){
         // 	var offline = new Notification("The stream is not currently live Notice_M3 will not run.");
